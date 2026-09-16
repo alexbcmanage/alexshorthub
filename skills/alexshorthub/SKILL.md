@@ -26,7 +26,9 @@ Before writing any code, read [reference/design-direction.md](reference/design-d
 
 > "Reading this as: `<page kind>` for `<audience>`, `<vibe>` language, targeting `<design system or custom aesthetic>`."
 
-If the brief is genuinely ambiguous on a decision that changes the output materially (tone, whether to preserve an existing brand, one aesthetic vs. another), ask exactly **one** targeted question. Do not ask when you can confidently infer - most briefs do not need a question.
+A bare topic and nothing else ("landing page for a dental clinic," "site for a coffee shop") is a complete brief, not an incomplete one. When there are no vibe words, references, or audience notes to go on, infer the read from the industry itself using [the category table](reference/design-direction.md#when-the-brief-is-just-a-topic) and proceed - do not ask a question just because the brief is short.
+
+If the brief is genuinely ambiguous on a decision that changes the output materially (tone, whether to preserve an existing brand, one aesthetic vs. another), ask exactly **one** targeted question. Do not ask when you can confidently infer - most briefs, short or long, do not need a question.
 
 ### 2. Set the three knobs
 

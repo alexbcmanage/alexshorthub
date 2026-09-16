@@ -17,6 +17,31 @@ State the read in one line before building:
 
 Ask exactly one clarifying question only when the read genuinely forks into two different builds. Otherwise commit to the read and move.
 
+## When the brief is just a topic
+
+A bare category with nothing else ("a landing page for a dental clinic," "a site for a coffee roastery," "лендинг для стоматологии") is a complete, valid brief on its own, not an ambiguous one. Sparse input is not a reason to ask a question - infer the read from the industry itself and state it, exactly as if vibe words had been given.
+
+Use the category as the primary signal when no vibe words, references, or audience description are present:
+
+| Category | Starting mode / tone | Starting dials (variance / motion / density) | Reach past this category's own reflex |
+|---|---|---|---|
+| Restaurant / cafe / food & beverage | Persuade, warm and sensory | 6-8 / 5-7 / 3-4 | The rustic-wood-and-script-font "artisan menu" template; ground it in real, appetite-forward photography instead. |
+| Healthcare / medical / dental / clinic | Persuade with a trust-first undertone | 3-5 / 3-4 / 3-4 | The sterile blue-and-white stock-photo-smile look; use real photography (or an explicit placeholder) and a specific, not-generic palette. |
+| Legal / financial / professional services | Trust-first, restrained | 3-4 / 2-3 / 3-4 | The navy-and-gold "serious firm" template; pull specificity from the actual firm's positioning, not the category default. |
+| Real estate | Persuade, image-led | 6-7 / 5-6 / 3-4 | Generic MLS-style listing-card grids; lead with real photography of the actual properties or a labeled placeholder. |
+| Fitness / gym / sports | Persuade, energetic | 7-8 / 6-8 / 3-4 | The black-and-neon-orange gym template; pick a palette as deliberately as [typography-and-color.md](typography-and-color.md) asks for any other vertical. |
+| Beauty / salon / spa | Persuade, sensory and premium | 6-8 / 5-7 / 2-3 | The blush-pink-and-thin-serif "clean girl" template; earn the palette from the actual brand rather than the category habit. |
+| Education / courses / coaching | Persuade (marketing pages) or Read (course content) | 5-7 / 4-6 / 3-5 | Stock-photo-laptop-and-coffee heroes; use content-specific imagery or a real product screenshot instead. |
+| Nonprofit / charity | Trust-first with real emotional pull | 5-6 / 4-6 / 3-4 | The generic stock-photo-hands-around-a-globe cliché; use specific, real imagery of the actual work when available. |
+| Wedding / events / photography portfolio | Experience, image-led | 7-9 / 5-7 / 2-3 | A template gallery grid with no editorial sequencing; let the actual work set the pace of the page. |
+| SaaS / tech startup | Persuade, clean by default | 6-8 / 5-7 / 3-4 | The Linear-clone look (dark hero, single gradient blob, Inter everywhere) - see the reflex-palette warnings in [typography-and-color.md](typography-and-color.md). |
+| Local trade / contractor / small local business | Trust-first but approachable | 4-6 / 3-5 / 3-4 | The generic "handyman" stock-photo hero with a phone number slapped on top; ground the page in the specific trade and area served. |
+| Agency / creative studio / personal portfolio | Experience, high expression | 8-10 / 7-9 / 2-4 | Awwwards-template pastiche (rotated vertical text, marquee-everywhere); see the layout and marquee caps in [anti-slop-checklist.md](anti-slop-checklist.md). |
+
+This table is a starting point, not a rule to apply blindly - a brief that adds vibe words, references, or explicit constraints overrides it immediately. Every category has its own reflex look the same way premium-consumer briefs default to beige-and-brass ([typography-and-color.md](typography-and-color.md#avoiding-the-reflex-palettes)); naming the category is not license to reproduce its most common template.
+
+When the category genuinely isn't covered above, reason from the closest analog (a veterinary clinic reads closer to healthcare than to retail) rather than falling back to a generic default.
+
 ## What surface is this - the four modes
 
 Choose per-surface, not per-product. A tool's own marketing page is Persuade even if the tool itself is Operate; a fashion brand's documentation is Read even if the brand is Experience everywhere else.
