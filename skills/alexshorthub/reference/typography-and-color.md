@@ -15,6 +15,7 @@
 - Serif is not the default "creative" or "premium" signal - that instinct is itself an AI tell. Use serif display type only when the brief names a serif explicitly, or the aesthetic is genuinely editorial, luxury, publication, or heritage, and you can state why this specific serif fits this specific brand. Everything else defaults to a sans display face.
 - To emphasize a word inside a headline, use italic or bold of the *same* family. Injecting a different font family into one word for "visual interest" reads as amateur.
 - A system fallback face (the platform default sans, Arial Black, Impact) is never the display voice of an own-world page - source and self-host a real face.
+- **The face must cover the page's script.** For Cyrillic and other non-Latin copy, confirm the font actually ships that subset (and the italic and weights you use) before choosing it, and load the subset explicitly. A face that falls back to the browser default mid-headline is worse than a plainer face that covers both scripts. The `-0.04em` tracking floor above is calibrated on Latin; see [non-english-briefs.md](non-english-briefs.md).
 
 ## Color
 

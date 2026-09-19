@@ -99,7 +99,7 @@ The knobs are only useful if they translate into concrete decisions. Use these a
 
 Once a project-level choice is made, it applies everywhere - inconsistency reads as unfinished, not eclectic:
 
-- **One theme.** Pick light, dark, or system-driven once at the page root. No section flips to the inverted mode mid-scroll, unless a deliberate one-time theme-switch is itself the brief's composition device.
+- **One theme.** Pick light, dark, or system-driven once at the page root, and pick it from the use scene (who is looking, where, in what ambient light), not from the category habit ("fintech is dark," "wellness is cream"). No section flips to the inverted mode mid-scroll, unless a deliberate one-time theme-switch is itself the brief's composition device.
 - **One accent color**, used identically in every section it appears.
 - **One corner-radius system** (all-sharp, all-soft, or pill-for-interactive-only), applied with a stated rule, not mixed without one.
 - **One copy register** - don't drift between technical-mono metadata, editorial prose, and marketing punch within the same page unless the brand voice explicitly calls for that mix.
@@ -113,3 +113,16 @@ Once a project-level choice is made, it applies everywhere - inconsistency reads
 ## Anti-default discipline
 
 The read exists specifically to route around what an unprompted model reaches for by default: AI-purple gradients, a centered hero over a dark mesh background, three identical feature cards, glassmorphism applied to everything, Inter paired with slate-900 text. None of these are banned outright - they're the reflex. The three knobs and the read above should already be steering away from them before the anti-slop checklist even runs as a final gate.
+
+## When the sources disagree
+
+This skill is a synthesis, and its sources do not always agree. Where they conflict, the decision below is the one to follow. The brief's own words still outrank every row: a brief that names a pattern earns it back.
+
+| Question | What the sources say | What this skill does |
+|---|---|---|
+| Eyebrow labels above headings | Taste Skill allows at most one per three sections (hero counts as one). Impeccable treats them as a ban no brief earns back. | **Default is zero.** The Taste cap is a ceiling, not a target: use one only where the page's own mode needs wayfinding (Read surfaces such as docs and long editorial pages) or the brief asks for labels. Never more than `ceil(sections / 3)`, never section numbers. |
+| Motion when the knob is above 4 | Taste Skill: "motion claimed, motion shown," meaning hero entrance, scroll-reveal on key sections, and hover physics at minimum. Impeccable: one authored moment, and never the same entrance on every section; a generic fade-and-rise or scroll reveal is not a thesis. | **Ship one authored signature moment** that comes from this product's own story (a hero entrance, or one scroll-driven sequence), plus press and hover feedback on interactive elements. Scroll-reveal only on sections where the order of reveal carries meaning. Never the same fade-up on every section. At knob 8-10, several authored moments, each with a one-sentence motive. If working motion cannot be shipped, lower the knob and ship a clean static page. |
+| Em dash | Taste Skill bans it outright as an English-language model tell. Impeccable's detector flags overuse. | Zero in English copy. In other languages, keep the dash where the language's punctuation requires it and remove it as a stylistic pause; see [non-english-briefs.md](non-english-briefs.md). |
+| Charts | Bklit UI is a composable chart registry. Emil Kowalski's library list points to Recharts and Liveline. | **Bklit by default**; another chart library only when the project already uses it or Bklit has no chart of the needed type. |
+| Animation library | Componentry and Bklit are built on Motion (Framer Motion). GSAP's own guidance is to reach for it for timelines and scroll-driven work. | One animation stack per page. Componentry components commit the page to Motion; GSAP-only sections are built from the skeletons in [motion-and-animation.md](motion-and-animation.md) instead of mixing both. A chart's internal `motion` dependency is contained and does not count. |
+| Verification | Impeccable ships a deterministic detector CLI. Taste Skill relies on a manual pre-flight checklist and a copy self-audit. | Run the detector when it can run, then the manual checklist for what a scanner cannot see. See [qa-and-verification.md](qa-and-verification.md). |
