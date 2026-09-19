@@ -30,6 +30,10 @@ A bare topic and nothing else ("landing page for a dental clinic," "site for a c
 
 If the brief is genuinely ambiguous on a decision that changes the output materially (tone, whether to preserve an existing brand, one aesthetic vs. another), ask exactly **one** targeted question. Do not ask when you can confidently infer - most briefs, short or long, do not need a question.
 
+**If the brief is not in English, or the page is for readers of another language**, read [reference/non-english-briefs.md](reference/non-english-briefs.md) now and name the page language in the design read. The em dash ban, the font shortlist, and the English-tuned length limits all change for other languages, and finding that out at the verification step is too late.
+
+The reference files were assembled from sources that sometimes disagree (eyebrow labels, how much motion, which chart or animation library). The decisions are recorded in [reference/design-direction.md](reference/design-direction.md#when-the-sources-disagree); follow them rather than re-deriving per project.
+
 ### 2. Set the three knobs
 
 Three numbers steer every layout, motion, and density decision downstream. Full inference table in [reference/design-direction.md](reference/design-direction.md#the-three-knobs).
@@ -69,6 +73,8 @@ Apply [reference/typography-and-color.md](reference/typography-and-color.md) and
 
 Read [reference/qa-and-verification.md](reference/qa-and-verification.md). Build fully, inspect once (desktop + mobile together), fix everything the inspection surfaces, confirm with at most one more pass, then stop. Do not loop indefinitely polishing - that spends the user's time without spending it well.
 
+Before the two mandatory gates there is one optional automated gate: run Impeccable's detector (`npx impeccable detect <path or URL>`) once if it can run, and report it as skipped if it cannot. Details, exit codes, and how to waive a deliberate finding are in the QA reference.
+
 The verification pass has two mandatory gates, run in this order:
 
 1. **Anti-slop checklist** ([reference/anti-slop-checklist.md](reference/anti-slop-checklist.md)) - mechanical, binary, no judgment calls. Includes the copy self-audit: re-read every visible string for broken grammar, unclear referents, or forced-sounding phrasing before calling the copy done.
@@ -78,4 +84,4 @@ Report what you found and fixed. If something in the checklist fired and you kep
 
 ## Sources
 
-This skill is an original synthesis, not a bundling of the source skills' text. Each source contributed rules and judgment calls, credited in [README.md](../../README.md#sources) at the repo root.
+This skill is an original synthesis, not a bundling of the source skills' text. Each source contributed rules and judgment calls, credited in [README.md](../../README.md#sources) at the repo root. The guidance for non-English pages is the exception: its punctuation and typography conventions are general practice, not taken from any of the nine sources.

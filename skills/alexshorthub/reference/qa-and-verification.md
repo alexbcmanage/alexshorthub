@@ -8,8 +8,14 @@ Open-ended self-review after that point burns time re-checking things that were 
 
 ## Gate order
 
-1. **Anti-slop checklist** ([anti-slop-checklist.md](anti-slop-checklist.md)) first. It's mechanical and binary - run it before the quality floor below so you're not polishing a pattern you're about to delete.
-2. **Quality floor** (this file) second, on what survives gate 1.
+0. **Automated detector, when it can run** (optional, one run, part of the same bounded pass). Impeccable ships a standalone CLI with 61 deterministic anti-pattern rules (side-tab borders, gradient text, bounce easing, dark glows, line length, cramped padding, skipped headings, small touch targets, and more). Run it once against the built source or the served page instead of eyeballing what a scanner does better:
+   - `npx impeccable detect src/` (a directory), `npx impeccable detect index.html`, or `npx impeccable detect http://localhost:3000` (a URL; needs an installed Chrome, Chromium or Edge). Add `--json` for machine-readable output.
+   - Exit `0` = scan finished with no primary findings, `2` = finished with findings, `1` = a target could not be scanned. Findings print to stderr.
+   - The first run may download a platform binary into `~/.impeccable/bin/`. If there is no network or the user has not agreed to a download, skip this gate and say so in the report; do not pretend it ran.
+   - A clean run is evidence, not proof. It does not replace inspecting the rendered page at desktop and mobile.
+   - A finding the brief deliberately earned (a named brand font flagged as overused, a language whose punctuation trips a copy rule) is waived explicitly and reported: an inline `<!-- impeccable-disable <rule-id>: <reason> -->` in that file, or `npx impeccable ignores add-value <rule-id> <value> --reason "..."`. Never silence a rule just to get a clean exit code.
+1. **Anti-slop checklist** ([anti-slop-checklist.md](anti-slop-checklist.md)) next. It's mechanical and binary - run it before the quality floor below so you're not polishing a pattern you're about to delete. It also covers what a scanner cannot see: copy quality, fabricated specificity, and hero and page-chrome tells.
+2. **Quality floor** (this file) last, on what survives gates 0 and 1.
 
 ## Quality floor
 
@@ -35,11 +41,13 @@ State what the verification pass caught and fixed, not just a final "looks good.
 
 The prose gates above cover the reasoning; this is the fast, scannable pass over the highest-signal binary checks pulled from every reference file. If any box fails, the build is not done - fix it, don't rationalize it.
 
-- [ ] Zero em dashes anywhere visible on the page (headline, body, quote, caption, alt text, button).
+- [ ] Zero decorative em dashes anywhere visible on the page (headline, body, quote, caption, alt text, button). In non-English copy, only dashes the language's punctuation requires remain ([non-english-briefs.md](non-english-briefs.md)).
 - [ ] One accent color, one corner-radius system, one light/dark theme, one copy register - each used identically across every section.
 - [ ] Hero fits the viewport unscrolled: headline ≤2 lines, subtext ≤20 words, primary CTA visible, top padding ≤ ~6rem.
 - [ ] No duplicate CTA intent anywhere on the page (nav, hero, footer all say the same thing for the same action).
-- [ ] No eyebrow count over `ceil(sections / 3)`; no section-number eyebrows or staged-progress labels.
+- [ ] No eyebrows unless the surface or the brief needs them, and never more than `ceil(sections / 3)`; no section-number eyebrows or staged-progress labels.
+- [ ] Non-English page only: `lang` set, chosen fonts confirmed to cover the script, real copy re-tested at every breakpoint ([non-english-briefs.md](non-english-briefs.md)).
+- [ ] Detector (gate 0) run and clean, or every waived finding named with its reason, or the gate explicitly reported as skipped.
 - [ ] No more than two consecutive sections share a layout family.
 - [ ] Every CTA's text is readable against its own background (no white-on-white, WCAG AA 4.5:1 minimum).
 - [ ] Every ScrollTrigger/GSAP pin uses `start: "top top"` (or an equivalent verified start), not a default that fires mid-reveal.

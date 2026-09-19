@@ -4,7 +4,7 @@ Mechanical, binary checks. Run before writing markup (so you don't build the thi
 
 ## Typographic tells
 
-- **No em dash (`—`) or en dash used as a separator (`–`), anywhere the user will see it** - headline, eyebrow, pill, button, body copy, quote, attribution, caption, alt text. This is the single most common model-written tell; there is no "used sparingly" exception. Rewrite with a period, a comma, a colon, or two sentences. Ranges (`2018-2026`, `€40-80k`) use a plain hyphen. If a single em dash survives to the final page, the copy pass isn't done.
+- **No em dash (`—`) or en dash used as a separator (`–`), anywhere the user will see it** - headline, eyebrow, pill, button, body copy, quote, attribution, caption, alt text. This is the single most common model-written tell; there is no "used sparingly" exception. Rewrite with a period, a comma, a colon, or two sentences. Ranges (`2018-2026`, `€40-80k`) use a plain hyphen. If a single em dash survives to the final page, the copy pass isn't done. **This rule is written for English copy.** In a language whose punctuation requires the dash (Russian, for one), keep the grammatical dash and remove only the stylistic ones; see [non-english-briefs.md](non-english-briefs.md).
 - No middle-dot (`·`) used as the default separator for everything ("foo · bar · baz · qux"). At most one per line in a metadata strip; prefer line breaks, hairlines, or columns for anything longer.
 - No `<br>`-broken, italicized headline split as a default "design move" ("for thirty\<br\>*years.*"). Headlines read naturally first; get typographically clever only when the brief specifically calls for it.
 - No vertical rotated text ("INDEX OF WORK, 2018-2026" rotated 90°) unless the brief is explicitly agency/experimental and the rotation serves the actual composition.
@@ -29,7 +29,7 @@ Mechanical, binary checks. Run before writing markup (so you don't build the thi
 
 ## Badges, pills, and eyebrows
 
-- Small-caps "eyebrow" labels above section headings, at most **one per three sections** (hero counts as one). Count the actual instances of an uppercase/tracked micro-label above a headline across the page; if the count exceeds `ceil(sections / 3)`, cut some. The headline alone is usually enough - the section's position already tells the reader what it is.
+- Small-caps "eyebrow" labels above section headings: **default is none.** The headline alone is usually enough - the section's position already tells the reader what it is. Keep one only where the surface genuinely needs wayfinding (docs and long editorial pages) or the brief asks for labels, and then never more than **one per three sections** (hero counts as one). Count the actual instances of an uppercase/tracked micro-label above a headline across the page; any eyebrow without that justification, or a count above `ceil(sections / 3)`, gets cut. (Why the default is stricter than the cap: [design-direction.md](design-direction.md#when-the-sources-disagree).)
 - No section-number eyebrows (`00 / INDEX`, `001 · Capabilities`, `06 · how it works`) or `01 / 4`-style pagination captions on tiles - if the reader can count, they don't need the label.
 - No generic staged-progress labels ("Step 1 / Step 2 / Step 3," "Phase 01 / Phase 02," "Stage One / Stage Two"). Use the actual action as the label ("Install," "Configure," "Ship"), not a numbered wrapper around it.
 - No pill/label overlays on photographs (`Plate · 02`, `Field notes - journal`). Either let the image stand alone or caption it directly below, outside the image.
@@ -43,6 +43,19 @@ Mechanical, binary checks. Run before writing markup (so you don't build the thi
 - No comparison bars built from a filled background track with a partial fill on top (dashboard-style progress bars used as marketing comparison visuals). Prefer a number plus a small icon, or a thin inline bar with no background track.
 - No dot-grid or dot-pattern background added purely to fill empty space.
 - No pagination dots or carousel indicators by default - only when there's a real carousel and the dots communicate real position.
+
+## Surface and decoration habits
+
+These come from Impeccable's craft floor and its automatic detector. Like everything here they are defaults the brief can earn back by name, not bans.
+
+- No gradient text. Emphasis comes from weight or size.
+- No colored `border-left` / `border-right` thicker than 1px on cards, list items, callouts, or alerts (the "side-tab" look).
+- No hard offset shadows (`box-shadow: 4px 4px 0`) outside a page that is deliberately neobrutalist. The zero-blur block shadow is a costume, not a depth system.
+- No "ghost card": a 1px border under a wide soft shadow. Declare elevation once, as a border or as a shadow, not both.
+- No glass or backdrop blur used as decoration. Use it only where it does a specific job (a sticky nav over scrolling content, say).
+- No monospace type as a costume for "technical". Mono is for code, data, and measurement.
+- No modal for a task that needs neither interruption nor protected focus; an inline expansion or a plain page section is the default.
+- Never animate an image on hover, directly or through its parent. It is not an action target; give the container the feedback.
 
 ## Unnecessary text
 

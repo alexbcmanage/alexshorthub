@@ -13,7 +13,7 @@ Never animate a keyboard-initiated action: at high repetition, animation reads a
 
 **Motion must be motivated.** Before adding any animation, state in one sentence what it communicates: hierarchy (draws attention to the right thing), storytelling (reveals content in an order that matches a narrative), feedback (acknowledges a user action), or state transition (shows that something changed). "It looked cool" is not a valid answer for anything the user sees often. Reaching for GSAP or a scroll hijack because the library is available, without a one-sentence justification, is the tell of un-motivated motion.
 
-**Claimed motion must be shown.** If the brief's motion knob (see [design-direction.md](design-direction.md#the-three-knobs)) is set above the low end, the shipped page must actually move: entry transitions on the hero, scroll-reveal on key sections, hover physics on CTAs, at minimum. A static page claiming a high motion value is broken. Conversely, if working motion can't be shipped in the available scope, lower the knob and ship a clean static page rather than half-building motion with cut-off ScrollTriggers or missing cleanup.
+**Claimed motion must be shown, and it must be authored.** If the brief's motion knob (see [design-direction.md](design-direction.md#the-three-knobs)) is set above 4, the shipped page must actually move: at minimum **one authored signature moment** that comes from this product's own story (a hero entrance, or one scroll-driven sequence), plus press and hover feedback on interactive elements. A static page claiming a high motion value is broken. The opposite failure is just as common: the same fade-up applied to every section is decoration, not motion, and a generic fade-and-rise, hover lift, or scroll reveal is not a signature moment. Use scroll-reveal only on sections where the order of reveal carries meaning. At knob 8-10 there can be several authored moments, each with its one-sentence motive above. If working motion can't be shipped in the available scope, lower the knob and ship a clean static page rather than half-building motion with cut-off ScrollTriggers or missing cleanup. (How this resolves the Taste Skill and Impeccable positions: [design-direction.md](design-direction.md#when-the-sources-disagree).)
 
 ## Easing and duration
 
@@ -88,7 +88,8 @@ Default import: `import { motion, useReducedMotion } from "motion/react"`.
   transition={{ type: "spring", stiffness: 300, damping: 20 }}
 />
 
-// Scroll reveal: lighter than GSAP for a plain "appear once" case
+// Scroll reveal: lighter than GSAP for a plain "appear once" case.
+// Use it where the order of reveal means something, not as one identical entrance on every section.
 <motion.div
   initial={{ opacity: 0, y: 50 }}
   whileInView={{ opacity: 1, y: 0 }}
@@ -147,48 +148,53 @@ el.addEventListener("mousemove", (e) => {
 
 The most common ScrollTrigger failure is a card that reveals sequentially instead of actually pinning. The fix is always `start: "top top"`, not `"top center"` or `"top 80%"`.
 
+GSAP's own React guidance is `useGSAP` from `@gsap/react` (`npm install @gsap/react`), not a hand-rolled `useEffect`: it scopes selectors to the ref and reverts every tween and ScrollTrigger on unmount. Reduced motion goes through `gsap.matchMedia()`, not through a second animation library: importing `useReducedMotion` from `motion/react` into a GSAP component would put two animation libraries in one tree. `matchMedia` creates its own context, so do not nest `gsap.context()` inside it.
+
 ```tsx
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useReducedMotion } from "motion/react";
+import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export function StickyStack({ cards }: { cards: React.ReactNode[] }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
 
-  useEffect(() => {
-    if (reduce || !ref.current) return;
-    const ctx = gsap.context(() => {
-      const cardEls = gsap.utils.toArray<HTMLElement>(".stack-card");
-      cardEls.forEach((card, i) => {
-        if (i === cardEls.length - 1) return;
-        ScrollTrigger.create({
-          trigger: card,
-          start: "top top",
-          endTrigger: cardEls[cardEls.length - 1],
-          end: "top top",
-          pin: true,
-          pinSpacing: false,
-        });
-        gsap.to(card, {
-          scale: 0.92,
-          opacity: 0.55,
-          ease: "none",
-          scrollTrigger: {
-            trigger: cardEls[i + 1],
-            start: "top bottom",
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      // Reduced motion: the CSS `sticky` layout below still stacks the cards; only the pin/scale choreography is skipped.
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const cardEls = gsap.utils.toArray<HTMLElement>(".stack-card");
+        cardEls.forEach((card, i) => {
+          if (i === cardEls.length - 1) return;
+          ScrollTrigger.create({
+            trigger: card,
+            start: "top top",
+            endTrigger: cardEls[cardEls.length - 1],
             end: "top top",
-            scrub: true,
-          },
+            pin: true,
+            pinSpacing: false,
+          });
+          gsap.to(card, {
+            scale: 0.92,
+            opacity: 0.55,
+            ease: "none",
+            scrollTrigger: {
+              trigger: cardEls[i + 1],
+              start: "top bottom",
+              end: "top top",
+              scrub: true,
+            },
+          });
         });
-      });
-    }, ref);
-    return () => ctx.revert();
-  }, [reduce]);
+      }, ref);
+      return () => mm.revert();
+    },
+    { scope: ref },
+  );
 
   return (
     <div ref={ref} className="relative">
@@ -204,44 +210,47 @@ export function StickyStack({ cards }: { cards: React.ReactNode[] }) {
 
 ### Canonical skeleton - horizontal scroll-hijack
 
-Same fix applies: pin the wrapper with `start: "top top"`, scrub the inner track, and size `end` off the actual scroll distance so the pin releases exactly when the track finishes sliding.
+Same fix applies: pin the wrapper with `start: "top top"`, scrub the inner track, and size `end` off the actual scroll distance so the pin releases exactly when the track finishes sliding. Both `x` and `end` are functions so `invalidateOnRefresh` recomputes them on resize; a distance measured once goes stale as soon as the viewport changes. Same `useGSAP` + `matchMedia` structure as above.
 
 ```tsx
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useReducedMotion } from "motion/react";
+import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export function HorizontalPan({ children }: { children: React.ReactNode }) {
   const wrap = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
 
-  useEffect(() => {
-    if (reduce || !wrap.current || !track.current) return;
-    const ctx = gsap.context(() => {
-      const distance = track.current!.scrollWidth - window.innerWidth;
-      gsap.to(track.current, {
-        x: -distance,
-        ease: "none",
-        scrollTrigger: {
-          trigger: wrap.current,
-          start: "top top",
-          end: () => `+=${distance}`,
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-    }, wrap);
-    return () => ctx.revert();
-  }, [reduce]);
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const distance = () => track.current!.scrollWidth - window.innerWidth;
+        gsap.to(track.current, {
+          x: () => -distance(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: wrap.current,
+            start: "top top",
+            end: () => `+=${distance()}`,
+            pin: true,
+            scrub: 1,
+            invalidateOnRefresh: true,
+          },
+        });
+      }, wrap);
+      return () => mm.revert();
+    },
+    { scope: wrap },
+  );
 
   return (
-    <section ref={wrap} className="relative overflow-hidden">
+    // `motion-reduce:overflow-x-auto`: with the pin skipped, the off-screen panels must stay reachable by native scrolling.
+    <section ref={wrap} className="relative overflow-hidden motion-reduce:overflow-x-auto">
       <div ref={track} className="flex h-[100dvh] items-center">
         {children}
       </div>
